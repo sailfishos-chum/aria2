@@ -47,16 +47,20 @@ PkgBR:
   - libtool
   # autotools needs autopoint
   - gettext-devel
+  # spectacle complains about this, ignore that.
+  - c-ares-devel
   - openssh
   # 4.4 renamed the pkgconfig entry
   - ( pkgconfig(libgpg-error) or pkgconfig(gpg-error) )
 PkgConfigBR:
-  - sqlite3
-  - expat
-  # libgcrypt
   - libssl
   - libxml-2.0
+  - sqlite3
   - zlib
+  # expat
+  # libgcrypt
+  # spectacle wants this, but it's not actually found in the build env:
+  # libcares
 Configure: reconfigure
 ConfigOptions:
   - '--enable-libaria2'

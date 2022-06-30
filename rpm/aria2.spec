@@ -18,15 +18,15 @@ Source0:    %{name}-%{version}.tar.bz2
 Source100:  aria2.yaml
 Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
-BuildRequires:  pkgconfig(sqlite3)
-BuildRequires:  pkgconfig(expat)
 BuildRequires:  pkgconfig(libssl)
 BuildRequires:  pkgconfig(libxml-2.0)
+BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
 BuildRequires:  gettext-devel
+BuildRequires:  c-ares-devel
 BuildRequires:  openssh
 BuildRequires:  ( pkgconfig(libgpg-error) or pkgconfig(gpg-error) )
 

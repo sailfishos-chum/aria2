@@ -1,4 +1,8 @@
-* Thu Jun 30 2022 Nephros <sailfish@nephros.org> - 1.36.0-1
+* Thu Jun 30 2022 Nephros <sailfish@nephros.org> - 1.36.0+git2
+- move packaging to chum github
+- add async DNS support via c-ares
+
+* Thu Jun 30 2022 Nephros <sailfish@nephros.org> - 1.36.0+git1
 - move packaging to chum github
 
 * Fri Apr 15 2022 Nephros <sailfish@nephros.org> - 1.36.0-0
