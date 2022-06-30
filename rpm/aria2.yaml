@@ -35,12 +35,15 @@ Description: |
       Help: https://aria2.github.io/manual/en/html/index.html
     %endif
 SetupOptions: -q -n %{name}-%{version}/upstream
-#Macros:
-#  - 'foo;bar'
-#Patches:
-#  - 'baz'
-#Requires:
-#  - 'bar'
+Macros:
+  - |
+    spectacle_bug; hack_fix
+    # Spectacular spectacle hack: 
+    #   abuse Macros to work around the Macro-deleting bug in 0.32 
+    #   also, add a conditional dep:
+    %if 0%{?sailfishos_version} >= 30400
+    BuildRequires: c-ares-devel
+    %endif
 PkgBR:
   - autoconf
   - automake
@@ -48,7 +51,6 @@ PkgBR:
   # autotools needs autopoint
   - gettext-devel
   # spectacle complains about this, ignore that.
-  - c-ares-devel
   - openssh
   # 4.4 renamed the pkgconfig entry
   - ( pkgconfig(libgpg-error) or pkgconfig(gpg-error) )

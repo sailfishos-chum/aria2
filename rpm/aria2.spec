@@ -7,6 +7,13 @@ Name:       aria2
 
 # >> macros
 # << macros
+%define spectacle_bug hack_fix
+# Spectacular spectacle hack: 
+#   abuse Macros to work around the Macro-deleting bug in 0.32 
+#   also, add a conditional dep:
+%if 0%{?sailfishos_version} >= 30400
+BuildRequires: c-ares-devel
+%endif
 
 Summary:    A utility for downloading files
 Version:    1.36.0
@@ -26,7 +33,6 @@ BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
 BuildRequires:  gettext-devel
-BuildRequires:  c-ares-devel
 BuildRequires:  openssh
 BuildRequires:  ( pkgconfig(libgpg-error) or pkgconfig(gpg-error) )
 
