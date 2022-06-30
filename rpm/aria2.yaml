@@ -51,7 +51,7 @@ PkgBR:
 PkgConfigBR:
   - sqlite3
   - expat
-  - libgcrypt
+  # libgcrypt
   - libssl
   - libxml-2.0
   - zlib
@@ -60,6 +60,21 @@ ConfigOptions:
   - '--disable-nls'
   - '--with-pic'
   - '--with-bashcompletiondir=%{_datadir}/bash-completion/completions'
+  # from README.rst:
+  # A user can have one of the following configurations for SSL
+  # and crypto libraries:
+  #
+  # * OpenSSL
+  # * GnuTLS + libgcrypt
+  # * GnuTLS + libnettle
+  #
+  # If you prefer OpenSSL, run configure with ``--without-gnutls`` ``--with-openssl``.
+  #
+  # Jolla/SailfishOS prefers OpenSSL over GnuTLS, esp. in 4.4+
+  - '--without-gnutls --with-openssl'
+
+
+
 AutoSubPackages:
   - doc
   - devel

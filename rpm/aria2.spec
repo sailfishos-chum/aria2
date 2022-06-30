@@ -20,7 +20,6 @@ Requires(post): /sbin/ldconfig
 Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(sqlite3)
 BuildRequires:  pkgconfig(expat)
-BuildRequires:  pkgconfig(libgcrypt)
 BuildRequires:  pkgconfig(libssl)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(zlib)
@@ -88,7 +87,8 @@ Development files for %{name}.
     --enable-libaria2 \
     --disable-nls \
     --with-pic \
-    --with-bashcompletiondir=%{_datadir}/bash-completion/completions
+    --with-bashcompletiondir=%{_datadir}/bash-completion/completions \
+    --without-gnutls --with-openssl
 
 make %{?_smp_mflags}
 
