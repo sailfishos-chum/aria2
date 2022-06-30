@@ -26,6 +26,7 @@ BuildRequires:  pkgconfig(zlib)
 BuildRequires:  autoconf
 BuildRequires:  automake
 BuildRequires:  libtool
+BuildRequires:  gettext-devel
 BuildRequires:  openssh
 BuildRequires:  ( pkgconfig(libgpg-error) or pkgconfig(gpg-error) )
 
@@ -83,7 +84,7 @@ Development files for %{name}.
 # >> build pre
 # << build pre
 
-%configure --disable-static \
+%reconfigure --disable-static \
     --enable-libaria2 \
     --disable-nls \
     --with-pic \

@@ -45,6 +45,8 @@ PkgBR:
   - autoconf
   - automake
   - libtool
+  # autotools needs autopoint
+  - gettext-devel
   - openssh
   # 4.4 renamed the pkgconfig entry
   - ( pkgconfig(libgpg-error) or pkgconfig(gpg-error) )
@@ -55,6 +57,7 @@ PkgConfigBR:
   - libssl
   - libxml-2.0
   - zlib
+Configure: reconfigure
 ConfigOptions:
   - '--enable-libaria2'
   - '--disable-nls'
