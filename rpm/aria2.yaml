@@ -1,0 +1,65 @@
+Name: aria2
+Summary: A utility for downloading files
+Version: 1.36.0
+Release: 0
+Group: Applications/Internet
+License: GPLv2
+URL: https://aria2.github.io
+SCM: https://github.com/aria2/aria2
+Sources:
+    - '%{name}-%{version}.tar.bz2'
+Description: |
+
+    aria2 is a utility for downloading files. The supported protocols are
+    HTTP(S), FTP, SFTP, BitTorrent, and Metalink.
+    
+    aria2 can download a file from multiple sources/protocols and tries to
+    utilize your maximum download bandwidth. It supports downloading a file
+    from HTTP(S)/FTP/SFTP and BitTorrent at the same time, while the data
+    downloaded from HTTP(S)/FTP/SFTP is uploaded to the BitTorrent swarm. Using
+    Metalink's chunk checksums, aria2 automatically validates chunks of data
+    while downloading a file like BitTorrent.
+
+    %if "%{?vendor}" == "chum"
+    PackageName: Aria2
+    Type: console-application
+    PackagerName: nephros
+    Categories:
+     - Internet
+     - Utility
+    Custom:
+      Repo: https://github.com/aria2/aria2
+      PackagingRepo: https://github.com/sailfishos-chum/aria2.git
+    Url:
+      Homepage: https://aria2.github.io
+      Help: https://aria2.github.io/manual/en/html/index.html
+    %endif
+SetupOptions: -q -n %{name}-%{version}/upstream
+#Macros:
+#  - 'foo;bar'
+#Patches:
+#  - 'baz'
+#Requires:
+#  - 'bar'
+PkgBR:
+  - autoconf
+  - automake
+  - libtool
+  - openssh
+  # 4.4 renamed the pkgconfig entry
+  - ( pkgconfig(libgpg-error) or pkgconfig(gpg-error) )
+PkgConfigBR:
+  - sqlite3
+  - expat
+  - libgcrypt
+  - libssl
+  - libxml-2.0
+  - zlib
+ConfigOptions:
+  - '--enable-libaria2'
+  - '--disable-nls'
+  - '--with-pic'
+  - '--with-bashcompletiondir=%{_datadir}/bash-completion/completions'
+AutoSubPackages:
+  - doc
+  - devel
