@@ -34,6 +34,7 @@ Description: |
       Homepage: https://aria2.github.io
       Help: https://aria2.github.io/manual/en/html/index.html
     %endif
+
 SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
   - |
@@ -42,7 +43,7 @@ Macros:
     #   abuse Macros to work around the Macro-deleting bug in 0.32 
     #   also, add a conditional dep:
     %if 0%{?sailfishos_version} >= 30400
-    BuildRequires: c-ares-devel
+    BuildRequires: pkgconfig(libcares)
     %endif
 PkgBR:
   - autoconf
@@ -51,6 +52,7 @@ PkgBR:
   # autotools needs autopoint
   - gettext-devel
   # spectacle complains about this, ignore that.
+  # c-ares-devel
   - openssh
   # 4.4 renamed the pkgconfig entry
   - ( pkgconfig(libgpg-error) or pkgconfig(gpg-error) )
@@ -82,8 +84,34 @@ ConfigOptions:
   # Jolla/SailfishOS prefers OpenSSL over GnuTLS, esp. in 4.4+
   - '--without-gnutls --with-openssl'
 
-
-
 AutoSubPackages:
   - doc
-  - devel
+
+SubPackages:
+    - Name: devel
+      AutoDepend: false
+      Summary:    Development files for %{name}
+      Group: Development/Libraries
+      Requires:
+        - libaria2 = %{version}-%{release}
+    - Name: libaria2
+      AsWholeName: true
+      AutoDepend: false
+      Summary: C++ library which offers %{name} functionality
+      Group: Development/Libraries
+      Description: |
+          %{summary}.
+
+          %if "%{?vendor}" == "chum"
+          PackageName: libaria2
+          PackagerName: nephros
+          Categories:
+           - Library
+          Custom:
+            Repo: https://github.com/aria2/aria2
+            PackagingRepo: https://github.com/sailfishos-chum/aria2.git
+          Url:
+            Homepage: https://aria2.github.io
+            Help: https://aria2.github.io/manual/en/html/index.html
+          %endif
+

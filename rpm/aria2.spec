@@ -12,7 +12,7 @@ Name:       aria2
 #   abuse Macros to work around the Macro-deleting bug in 0.32 
 #   also, add a conditional dep:
 %if 0%{?sailfishos_version} >= 30400
-BuildRequires: c-ares-devel
+BuildRequires: pkgconfig(libcares)
 %endif
 
 Summary:    A utility for downloading files
@@ -23,8 +23,6 @@ License:    GPLv2
 URL:        https://aria2.github.io
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  aria2.yaml
-Requires(post): /sbin/ldconfig
-Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(libssl)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(sqlite3)
@@ -64,6 +62,37 @@ Url:
 %endif
 
 
+%package devel
+Summary:    Development files for %{name}
+Group:      Development/Libraries
+Requires:   libaria2 = %{version}-%{release}
+
+%description devel
+%{summary}.
+
+%package -n libaria2
+Summary:    C++ library which offers %{name} functionality
+Group:      Development/Libraries
+Requires(post): /sbin/ldconfig
+Requires(postun): /sbin/ldconfig
+
+%description -n libaria2
+%{summary}.
+
+%if "%{?vendor}" == "chum"
+PackageName: libaria2
+PackagerName: nephros
+Categories:
+ - Library
+Custom:
+  Repo: https://github.com/aria2/aria2
+  PackagingRepo: https://github.com/sailfishos-chum/aria2.git
+Url:
+  Homepage: https://aria2.github.io
+  Help: https://aria2.github.io/manual/en/html/index.html
+%endif
+
+
 %package doc
 Summary:    Files for %{name}
 Group:      Development/Libraries
@@ -71,14 +100,6 @@ Requires:   %{name} = %{version}-%{release}
 
 %description doc
 Files for %{name}.
-
-%package devel
-Summary:    Development files for %{name}
-Group:      Development/Libraries
-Requires:   %{name} = %{version}-%{release}
-
-%description devel
-Development files for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}/upstream
@@ -111,24 +132,16 @@ rm -rf %{buildroot}
 # >> install post
 # << install post
 
-%post -p /sbin/ldconfig
+%post -n libaria2 -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%postun -n libaria2 -p /sbin/ldconfig
 
 %files
 %defattr(-,root,root,-)
 # >> files
 %{_bindir}/*
-%{_libdir}/*.so.*
 %{_datadir}/bash-completion/completions/*
 # << files
-
-%files doc
-%defattr(-,root,root,-)
-# >> files doc
-%{_docdir}/*
-%{_mandir}/*/*
-# << files doc
 
 %files devel
 %defattr(-,root,root,-)
@@ -137,3 +150,16 @@ rm -rf %{buildroot}
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 # << files devel
+
+%files -n libaria2
+%defattr(-,root,root,-)
+# >> files libaria2
+%{_libdir}/*.so.*
+# << files libaria2
+
+%files doc
+%defattr(-,root,root,-)
+# >> files doc
+%{_docdir}/*
+%{_mandir}/*/*
+# << files doc
