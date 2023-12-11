@@ -16,7 +16,7 @@ BuildRequires: pkgconfig(libcares)
 %endif
 
 Summary:    A utility for downloading files
-Version:    1.36.0
+Version:    1.37.0
 Release:    0
 Group:      Applications/Internet
 License:    GPLv2
@@ -47,16 +47,16 @@ Metalink's chunk checksums, aria2 automatically validates chunks of data
 while downloading a file like BitTorrent.
 
 %if "%{?vendor}" == "chum"
-PackageName: Aria2
+Title: Aria2
 Type: console-application
-PackagerName: nephros
+PackagedBy: nephros
 Categories:
  - Internet
  - Utility
 Custom:
   Repo: https://github.com/aria2/aria2
   PackagingRepo: https://github.com/sailfishos-chum/aria2.git
-Url:
+Links:
   Homepage: https://aria2.github.io
   Help: https://aria2.github.io/manual/en/html/index.html
 %endif
@@ -80,26 +80,18 @@ Requires(postun): /sbin/ldconfig
 %{summary}.
 
 %if "%{?vendor}" == "chum"
-PackageName: libaria2
-PackagerName: nephros
+Title: libaria2
+PackagedBy: nephros
 Categories:
  - Library
 Custom:
   Repo: https://github.com/aria2/aria2
   PackagingRepo: https://github.com/sailfishos-chum/aria2.git
-Url:
+Links:
   Homepage: https://aria2.github.io
   Help: https://aria2.github.io/manual/en/html/index.html
 %endif
 
-
-%package doc
-Summary:    Files for %{name}
-Group:      Development/Libraries
-Requires:   %{name} = %{version}-%{release}
-
-%description doc
-Files for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}/upstream
@@ -130,6 +122,8 @@ rm -rf %{buildroot}
 %make_install
 
 # >> install post
+rm -rf %{buildroot}%{_mandir}
+rm -rf %{buildroot}%{_docdir}
 # << install post
 
 %post -n libaria2 -p /sbin/ldconfig
@@ -156,10 +150,3 @@ rm -rf %{buildroot}
 # >> files libaria2
 %{_libdir}/*.so.*
 # << files libaria2
-
-%files doc
-%defattr(-,root,root,-)
-# >> files doc
-%{_docdir}/*
-%{_mandir}/*/*
-# << files doc
